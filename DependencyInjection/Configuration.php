@@ -27,6 +27,7 @@ class Configuration implements ConfigurationInterface
                     ->prototype('scalar')
                     ->end()
                 ->end()
+                ->scalarNode('route_path_prefix_requirement')->defaultValue('')->end()
                 ->arrayNode('motd')
                     ->addDefaultsIfNotSet()
                     ->children()
