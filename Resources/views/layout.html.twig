@@ -64,6 +64,16 @@
                 $(this).next().slideToggle('fast');
             });
 
+            $('.tabs li').click(function() {
+                var contentGroup = $(this).parents('.content');
+
+                $('.pane.selected', contentGroup).removeClass('selected');
+                $('.pane.' + $(this).data('pane'), contentGroup).addClass('selected');
+
+                $('li', $(this).parent()).removeClass('selected');
+                $(this).addClass('selected');
+            });
+
             {% if enableSandbox %}
                 var toggleButtonText = function ($btn) {
                     if ($btn.text() === 'Default') {
@@ -128,16 +138,6 @@
                     }
                     return body;
                 }
-
-                $('.tabs li').click(function() {
-                    var contentGroup = $(this).parents('.content');
-
-                    $('.pane.selected', contentGroup).removeClass('selected');
-                    $('.pane.' + $(this).data('pane'), contentGroup).addClass('selected');
-
-                    $('li', $(this).parent()).removeClass('selected');
-                    $(this).addClass('selected');
-                });
 
                 var prettifyResponse = function(text) {
                     try {
@@ -254,7 +254,7 @@
                     }
 
                     // prepare the api enpoint
-                    {% if endpoint == '' and app.request is defined and app.request.host -%}
+                    {% if endpoint == '' and app.request is not null and app.request.host -%}
                     var endpoint = '{{ app.request.getBaseUrl() }}';
                     {% else -%}
                     var endpoint = '{{ endpoint }}';
